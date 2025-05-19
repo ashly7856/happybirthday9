@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Birthday Fun</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: #2b053d;
+        font-family: Arial, sans-serif;
+        color: white;
+        text-align: center;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .joker-face {
+        position: absolute;
+        top: -10%;
+        animation: fall 6s linear infinite;
+        opacity: 0.8;
+        z-index: 1;
+        pointer-events: none;
+        user-select: none;
+        color: #ffcc00;
+    }
+
+    @keyframes fall {
+        from {
+            transform: translateY(-100%);
+            left: calc(100% * var(--left));
+        }
+        to {
+            transform: translateY(110vh);
+            left: calc(100% * var(--left));
+        }
+    }
+
+    .popup {
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        animation: fadeIn 1s ease-in-out;
+        z-index: 20;
+        max-width: 90vw;
+    }
+
+    .popup button {
+        margin: 10px;
+        padding: 10px 20px;
+        font-size: 18px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    #yes-btn {
+        background-color: #28a745;
+        color: white;
+    }
+
+    #no-btn {
+        background-color: #dc3545;
+        color: white;
+        cursor: not-allowed;
+    }
+
+    #message,
+    #birthday-content {
+        display: none;
+        animation: appearWithMagic 2s ease-in-out;
+    }
+
+    #birthday-content img {
+        max-width: 20%;
+        height: auto;
+        border-radius: 20px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+        margin-bottom: 20px;
+        z-index: 5;
+        position: relative;
+    }
+
+    #birthday-content p {
+        font-size: 1.2rem;
+        line-height: 1.6;
+        max-width: 800px;
+        margin: 0 auto;
+        white-space: pre-line;
+    }
+
+    #birthday-content h1 {
+        color: #ffcc00;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        font-size: 3.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: scale(0.9); }
+        to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes appearWithMagic {
+        0% { opacity: 0; transform: rotateY(90deg); }
+        50% { opacity: 0.5; transform: rotateY(45deg); }
+        100% { opacity: 1; transform: rotateY(0); }
+    }
+
+    @keyframes glitch {
+        0% { clip: rect(0, 9999px, 0, 0); transform: translate(0); }
+        20% { clip: rect(10px, 9999px, 50px, 0); transform: translate(-2px, -2px); }
+        40% { clip: rect(30px, 9999px, 70px, 0); transform: translate(2px, 2px); }
+        60% { clip: rect(10px, 9999px, 50px, 0); transform: translate(-2px, 2px); }
+        80% { clip: rect(30px, 9999px, 70px, 0); transform: translate(2px, -2px); }
+        100% { clip: rect(0, 9999px, 0, 0); transform: translate(0); }
+    }
+
+    .glitch {
+        position: relative;
+        animation: glitch 14s infinite;
+        color: #ffcc00;
+        text-shadow:
+            2px 0 red,
+            -2px 0 cyan;
+    }
+</style>
+</head>
+<body>
+    <div id="popup" class="popup">
+        <p>Do you want to enter?</p>
+        <button id="yes-btn">Yes</button>
+        <button id="no-btn" disabled>No</button>
+    </div>
+
+    <div id="message" class="popup">
+        <p>We won't allow you to enter. Just kidding! To enter in, press Yes.</p>
+        <button id="confirm-yes-btn">Yes</button>
+    </div>
+
+    <div id="birthday-content">
+        <h1>🎉 Happy Birthday, Paglet! 🎉</h1>
+        <img src="8.jpg" alt="Birthday Celebration" />
+        <p>
+            Happy Birthday, Paglet!<br><br>
+            Thank you for being the spark of joy and laughter among your friends and family.<br>
+            Your humor and warmth brighten everyone's days, making you truly special.<br>
+            We appreciate how you always bring smiles and light-hearted moments to every gathering.<br>
+            You are the heart of entertainment, the reason for endless laughter.<br>
+            Keep shining and making life fun for those lucky enough to know you.<br><br>
+            🥜 And remember, always snack on almonds for that extra charm! 🥜
+        </p>
+    </div>
+
+    <audio autoplay loop>
+        <source src="YOUR_SONG_URL_HERE.mp3" type="audio/mpeg" />
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        const popup = document.getElementById('popup');
+        const message = document.getElementById('message');
+        const birthdayContent = document.getElementById('birthday-content');
+
+        document.getElementById('yes-btn').addEventListener('click', () => {
+            popup.style.display = 'none';
+            message.style.display = 'block';
+        });
+
+        document.getElementById('confirm-yes-btn').addEventListener('click', () => {
+            message.style.display = 'none';
+            birthdayContent.style.display = 'block';
+
+            birthdayContent.querySelector('h1').classList.add('glitch');
+            birthdayContent.querySelector('img').classList.add('glitch');
+        });
+
+        for (let i = 0; i < 30; i++) {
+            const jokerEmoji = document.createElement('div');
+            jokerEmoji.textContent = "🃏";
+            jokerEmoji.className = 'joker-face';
+            jokerEmoji.style.setProperty('--left', Math.random());
+            jokerEmoji.style.fontSize = `${Math.random() * 40 + 20}px`;
+            jokerEmoji.style.left = `${Math.random() * 100}vw`;
+            jokerEmoji.style.top = `-${Math.random() * 20 + 10}px`;
+            document.body.appendChild(jokerEmoji);
+        }
+    </script>
+</body>
+</html>
