@@ -1,196 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Birthday Fun</title>
-<style>
-    body {
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background: #2b053d;
-        font-family: Arial, sans-serif;
-        color: white;
-        text-align: center;
-        overflow: hidden;
-        position: relative;
-    }
-
-    .joker-face {
-        position: absolute;
-        top: -10%;
-        animation: fall 6s linear infinite;
-        opacity: 0.8;
-        z-index: 1;
-        pointer-events: none;
-        user-select: none;
-        color: #ffcc00;
-    }
-
-    @keyframes fall {
-        from {
-            transform: translateY(-100%);
-            left: calc(100% * var(--left));
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Scene</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #add8e6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
         }
-        to {
-            transform: translateY(110vh);
-            left: calc(100% * var(--left));
+
+        #snowman {
+            position: absolute;
+            bottom: 50px;
+            left: 50px;
         }
-    }
 
-    .popup {
-        background-color: rgba(0, 0, 0, 0.8);
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        animation: fadeIn 1s ease-in-out;
-        z-index: 20;
-        max-width: 90vw;
-    }
+        .snowflake {
+            position: absolute;
+            top: -50px;
+            color: white;
+            font-size: 1.5em;
+            animation: fall 5s linear infinite;
+        }
 
-    .popup button {
-        margin: 10px;
-        padding: 10px 20px;
-        font-size: 18px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
+        @keyframes fall {
+            from {
+                transform: translateY(-100px);
+            }
+            to {
+                transform: translateY(100vh);
+            }
+        }
 
-    #yes-btn {
-        background-color: #28a745;
-        color: white;
-    }
+        #message {
+            position: fixed;
+            top: 10%;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
 
-    #no-btn {
-        background-color: #dc3545;
-        color: white;
-        cursor: not-allowed;
-    }
+        #options {
+            margin-top: 20px;
+        }
 
-    #message,
-    #birthday-content {
-        display: none;
-        animation: appearWithMagic 2s ease-in-out;
-    }
+        button {
+            background-color: #4682b4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
 
-    #birthday-content img {
-        max-width: 20%;
-        height: auto;
-        border-radius: 20px;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
-        margin-bottom: 20px;
-        z-index: 5;
-        position: relative;
-    }
+        button:hover {
+            background-color: #5a9bd4;
+        }
 
-    #birthday-content p {
-        font-size: 1.2rem;
-        line-height: 1.6;
-        max-width: 800px;
-        margin: 0 auto;
-        white-space: pre-line;
-    }
+        #sweater {
+            display: none;
+            position: fixed;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
 
-    #birthday-content h1 {
-        color: #ffcc00;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-        font-size: 3.5rem;
-        margin-bottom: 0.5rem;
-    }
+        #final-message {
+            display: none;
+            position: fixed;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
 
-    @keyframes fadeIn {
-        from { opacity: 0; transform: scale(0.9); }
-        to { opacity: 1; transform: scale(1); }
-    }
+        #final-message img {
+            max-width: 300px;
+            border-radius: 15px;
+        }
 
-    @keyframes appearWithMagic {
-        0% { opacity: 0; transform: rotateY(90deg); }
-        50% { opacity: 0.5; transform: rotateY(45deg); }
-        100% { opacity: 1; transform: rotateY(0); }
-    }
+        #final-message p {
+            margin-top: 15px;
+        }
 
-    @keyframes glitch {
-        0% { clip: rect(0, 9999px, 0, 0); transform: translate(0); }
-        20% { clip: rect(10px, 9999px, 50px, 0); transform: translate(-2px, -2px); }
-        40% { clip: rect(30px, 9999px, 70px, 0); transform: translate(2px, 2px); }
-        60% { clip: rect(10px, 9999px, 50px, 0); transform: translate(-2px, 2px); }
-        80% { clip: rect(30px, 9999px, 70px, 0); transform: translate(2px, -2px); }
-        100% { clip: rect(0, 9999px, 0, 0); transform: translate(0); }
-    }
+        #final-message p span.highlight {
+            font-weight: bold;
+            color: #ff6347;
+            font-size: 1.2em;
+        }
 
-    .glitch {
-        position: relative;
-        animation: glitch 14s infinite;
-        color: #ffcc00;
-        text-shadow:
-            2px 0 red,
-            -2px 0 cyan;
-    }
-</style>
+        audio {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-    <div id="popup" class="popup">
-        <p>Do you want to enter?</p>
-        <button id="yes-btn">Yes</button>
-        <button id="no-btn" disabled>No</button>
+    <div id="message">
+        <p>It's too cold here, birthday girl! Make sure you have a sweater!</p>
+        <div id="options">
+            <button onclick="handleResponse(true)">Yes, I have</button>
+            <button onclick="handleResponse(false)">No, I don't have</button>
+        </div>
     </div>
 
-    <div id="message" class="popup">
-        <p>We won't allow you to enter. Just kidding! To enter in, press Yes.</p>
-        <button id="confirm-yes-btn">Yes</button>
+    <div id="sweater">
+        <p>Take this sweater! Now you are safe.</p>
+        <button onclick="showFinalMessage()">Get In</button>
     </div>
 
-    <div id="birthday-content">
-        <h1>🎉 Happy Birthday, Paglet! 🎉</h1>
-        <img src="8.jpg" alt="Birthday Celebration" />
-        <p>
-            Happy Birthday, Paglet!<br><br>
-            Thank you for being the spark of joy and laughter among your friends and family.<br>
-            Your humor and warmth brighten everyone's days, making you truly special.<br>
-            We appreciate how you always bring smiles and light-hearted moments to every gathering.<br>
-            You are the heart of entertainment, the reason for endless laughter.<br>
-            Keep shining and making life fun for those lucky enough to know you.<br><br>
-            🥜 And remember, always snack on almonds for that extra charm! 🥜
+    <div id="final-message">
+        <img src="9.jpg" alt="Birthday Photo">
+        <p><span class="highlight">Happy Birthday, Dumbo!</span> 🎉<br>
+           Today, we celebrate not just your birth but the warmth you bring to our lives. <br>
+           In this cold weather, your kindness is the sweater that keeps us all cozy.<br>
+           Thank you for being the light, the joy, and the reason to smile.<br>
+           You are a blessing, a treasure, and an irreplaceable part of our world.<br>
+           May this year bring you endless happiness and all the love you deserve.<br>
+           Remember, Dumbo, the cold never bothered us anyway—with you around.<br>
+           Stay the amazing person you are. Here's to a fantastic year ahead.<br>
+           Cheers to you, our birthday star! 🌟
         </p>
     </div>
 
+    <img id="snowman" src="snowman-image-url.png" alt="Snowman">
+
     <audio autoplay loop>
-        <source src="YOUR_SONG_URL_HERE.mp3" type="audio/mpeg" />
+        <source src="heather-conan-gray.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
 
     <script>
-        const popup = document.getElementById('popup');
-        const message = document.getElementById('message');
-        const birthdayContent = document.getElementById('birthday-content');
+        const body = document.body;
 
-        document.getElementById('yes-btn').addEventListener('click', () => {
-            popup.style.display = 'none';
-            message.style.display = 'block';
-        });
+        function createSnowflakes() {
+            for (let i = 0; i < 100; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                snowflake.textContent = '*';
+                snowflake.style.left = Math.random() * window.innerWidth + 'px';
+                snowflake.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                snowflake.style.opacity = Math.random();
+                body.appendChild(snowflake);
+                setTimeout(() => snowflake.remove(), 5000);
+            }
+        }
 
-        document.getElementById('confirm-yes-btn').addEventListener('click', () => {
-            message.style.display = 'none';
-            birthdayContent.style.display = 'block';
+        setInterval(createSnowflakes, 300);
 
-            birthdayContent.querySelector('h1').classList.add('glitch');
-            birthdayContent.querySelector('img').classList.add('glitch');
-        });
+        function handleResponse(hasSweater) {
+            document.getElementById('message').style.display = 'none';
+            if (!hasSweater) {
+                document.getElementById('sweater').style.display = 'block';
+            } else {
+                showFinalMessage();
+            }
+        }
 
-        for (let i = 0; i < 30; i++) {
-            const jokerEmoji = document.createElement('div');
-            jokerEmoji.textContent = "🃏";
-            jokerEmoji.className = 'joker-face';
-            jokerEmoji.style.setProperty('--left', Math.random());
-            jokerEmoji.style.fontSize = `${Math.random() * 40 + 20}px`;
-            jokerEmoji.style.left = `${Math.random() * 100}vw`;
-            jokerEmoji.style.top = `-${Math.random() * 20 + 10}px`;
-            document.body.appendChild(jokerEmoji);
+        function showFinalMessage() {
+            document.getElementById('sweater').style.display = 'none';
+            document.getElementById('final-message').style.display = 'block';
         }
     </script>
 </body>
